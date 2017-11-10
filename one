@@ -1,0 +1,63 @@
+-- Craft_inspector
+
+function setup()
+    -- Create a new craft scene
+    scene = craft.scene()
+
+    -- Create a new entity
+    local e = scene:entity()
+end
+
+function update(dt)
+    -- Update the scene (physics, transforms etc)
+    scene:update(dt)
+end
+
+-- Called automatically by codea 
+function draw()
+    update(DeltaTime)
+
+    -- Draw the scene
+    scene:draw()	
+end
+
+
+
+function setup()
+    parameter.integer("x",-180,180,0)
+    parameter.integer("y",-180,180)
+    parameter.integer("z",-180,180,0)
+
+    -- Create a new craft scene
+    scene = craft.scene()
+
+    -- Move the main camera position
+    scene.camera.position = vec3( 0, 0, -10)
+
+    -- Adjust the scene lighting
+    scene.sun.rotation = quat.eulerAngles( 45, 150, 0)
+    scene.ambientColor = color(181, 98, 98, 255)
+
+    -- Get sky material and alter sky and horizon colors
+    local skyMaterial = scene.sky.material
+    skyMaterial.sky = color(0, 221, 255, 255)
+    skyMaterial.horizon = color(164, 223, 190, 255)
+
+    -- Create a new entity
+    e = scene:entity()
+    e.model = craft.model("Watercraft:watercraftPack_003")
+    e.scale = vec3(1,1,1) / 10
+end
+
+function update(dt)
+    -- Rotate the entit   
+    e.eulerAngles = vec3(x,y,z)
+
+    -- Update the scene (physics, transforms etc)
+    scene:update(dt)
+end
+
+function draw()
+    update(DeltaTime)
+    scene:draw()       
+end
